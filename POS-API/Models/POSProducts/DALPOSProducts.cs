@@ -43,8 +43,10 @@ namespace POS_API.Models.POSProducts
         //Parameter name        : [ "SupplierId" ]
 
 
+        //Note : The parameter SupplierName was newly added for ProductMapping Screen Purpose
 
         public List<POSProducts> GetProductsOmnitoPOS(int SupplierId)
+       // public List<POSProducts> GetProductsOmnitoPOS(int SupplierId,string SupplierName)
         {
             List<POSProducts> posproductsList = new List<POSProducts>();
             using (SqlConnection con = new SqlConnection(connectionstring))
@@ -53,6 +55,7 @@ namespace POS_API.Models.POSProducts
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 
                 cmd.Parameters.AddWithValue("@SupplierId", SupplierId);
+               // cmd.Parameters.AddWithValue("@SupplierName",SupplierName); --This line is added for product mapping screen purpose
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -82,10 +85,14 @@ namespace POS_API.Models.POSProducts
                     obj_posproducts.MinStock = 0;
                     obj_posproducts.MaxStock = 0;
                     obj_posproducts.SafetyStock = 0;
+
+                    //Latest Changes : StockInHand is newly added for Quantity purpose
+                    obj_posproducts.StockInHand = Convert.ToInt32(rdr["StockInHand"]);
                     posproductsList.Add(obj_posproducts);
                 }
                 con.Close();
             }
+            
             return posproductsList;
 
         }

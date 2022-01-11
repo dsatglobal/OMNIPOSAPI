@@ -59,7 +59,11 @@ namespace POS_API.Models.POSProducts
         //13 ) SupplierName
         public string SupplierName { get; set; }
 
+        
+        
+        //14) StockInHand  --Newly added for Quantity purpose
 
+        public int StockInHand { get; set; }
 
 
         
