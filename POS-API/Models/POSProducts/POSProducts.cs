@@ -10,8 +10,8 @@ namespace POS_API.Models.POSProducts
 
         //Note : Always the Columns of User Defined Table Types should match with the Object declared in the ModelClass.Cs file.
         //Note : User Defined Table Type Name : ProductsTYPE [ Backend ]
-        //Note : ProductsTYPE table consist of 13 columns
-        //Note : Order of 13 Columns is : ProductCode,ProductDesc,ManufacturerName,Model_Name,Category,SubCategory,CostPrice,WholeSalePrice,RetailPrice,MinStock,MaxStock,SafetyStock,SupplierName
+        //Note : OmniToPOSProductsTYPE  table consist of 14 columns
+        //Note : Order of 14 Columns is : ProductCode,ProductDesc,ManufacturerName,Model_Name,Category,SubCategory,CostPrice,WholeSalePrice,RetailPrice,MinStock,MaxStock,SafetyStock,SupplierName,StockInHand.
 
 
         //1 ) Product Code
@@ -61,7 +61,7 @@ namespace POS_API.Models.POSProducts
 
         
         
-        //14) StockInHand  --Newly added for Quantity purpose
+        //14) StockInHand  --Newly added for Quantity purpose [27-01-2022]
 
         public int StockInHand { get; set; }
 

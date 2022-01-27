@@ -86,7 +86,7 @@ namespace POS_API.Models.POSProducts
                     obj_posproducts.MaxStock = 0;
                     obj_posproducts.SafetyStock = 0;
 
-                    //Latest Changes : StockInHand is newly added for Quantity purpose
+                    //Latest Changes : StockInHand is newly added for Quantity purpose [27-01-2022]
                     obj_posproducts.StockInHand = Convert.ToInt32(rdr["StockInHand"]);
                     posproductsList.Add(obj_posproducts);
                 }
