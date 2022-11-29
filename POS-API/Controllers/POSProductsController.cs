@@ -9,40 +9,17 @@ namespace POS_API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class POSProductsController : ControllerBase //Changed from Controller => ControllerBase
+    public class POSProductsController : Controller //Changed from Controller => ControllerBase
     {
-        //Class Name : POSProducts.cs
-
-        POSProducts posproducts = new POSProducts();
-        DALPOSProducts dalposproducts = new DALPOSProducts();
-
-
-
-        //***********************************************************************************************
-        //                      Action Name : [ List  ]
-        //***********************************************************************************************
-        //Folder Name       : POSProducts
-        //Model Class Name  : POSProducts.cs
-        //DAL Class Name    : DALPOSProducts.cs
-        //DAL Method Name   : [GetProductsOmnitoPOS] for Select and  [ AddProductsOmniToPos ] for Insert 
-        //Parameter Name    : [ "SupplierId" ]
-       
-        //Note : The parameter SupplierName was newly added for ProductMapping Screen Purpose
-       
+        DALPOSProducts dalposproducts = new DALPOSProducts();       
         
         [HttpGet]
-
-       
-        public IActionResult List(int SupplierId)
-        //public IActionResult List(int SupplierId, string SupplierName) --This line is added for product mapping purpose 
-
+        public IActionResult List()
         {
             List<POSProducts> posproductsList = new List<POSProducts>();  
-            
-           // posproductsList = dalposproducts.GetProductsOmnitoPOS(SupplierId,SupplierName);
-            posproductsList = dalposproducts.GetProductsOmnitoPOS(SupplierId);
+            posproductsList = dalposproducts.GetProductsOmnitoPOS();
             dalposproducts.AddProductsOmniToPos(posproductsList);
-            return Ok();
+            return Ok(posproductsList);
         }
     }
 }

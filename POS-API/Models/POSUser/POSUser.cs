@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace POS_API.Models.POSProducts
+﻿namespace POS_API.Models.POSUser
 {
-    public class POSProducts
+    public class POSUser
     {
-
-        //Note : Always the Columns of User Defined Table Types should match with the Object declared in the ModelClass.Cs file.
-        //Note : User Defined Table Type Name : ProductsTYPE [ Backend ]
-        //Note : OmniToPOSProductsTYPE  table consist of 19 columns
-
-        public string ProductCode { get; set; }
-        public string ProductDesc { get; set; }
-        public string ManufacturerName { get; set; }
-        public decimal RetailPrice { get; set; }
-        public int StockInHand { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
         public string MerchantName { get; set; }
         public string MContactName { get; set; }
         public string MAddress { get; set; }

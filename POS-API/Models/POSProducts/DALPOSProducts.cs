@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;  //Newly added using statements
 using System.Data;
-using System.Data.SqlClient;
-using System.Security.Claims;
-using Microsoft.Data.SqlClient;
 using System.Reflection;
 
 namespace POS_API.Models.POSProducts
@@ -27,7 +22,6 @@ namespace POS_API.Models.POSProducts
             connectionstring = GetConString.ConString();
         }
 
-
         //For ListToDataTableConveter:
 
         ListtoDataTableConverter listdata = new ListtoDataTableConverter();
@@ -45,17 +39,13 @@ namespace POS_API.Models.POSProducts
 
         //Note : The parameter SupplierName was newly added for ProductMapping Screen Purpose
 
-        public List<POSProducts> GetProductsOmnitoPOS(int SupplierId)
-       // public List<POSProducts> GetProductsOmnitoPOS(int SupplierId,string SupplierName)
+        public List<POSProducts> GetProductsOmnitoPOS()
         {
             List<POSProducts> posproductsList = new List<POSProducts>();
             using (SqlConnection con = new SqlConnection(connectionstring))
             {
                 SqlCommand cmd = new SqlCommand("SP_GetProductsOmnitoPosAPI", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                
-                cmd.Parameters.AddWithValue("@SupplierId", SupplierId);
-               // cmd.Parameters.AddWithValue("@SupplierName",SupplierName); --This line is added for product mapping screen purpose
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -63,38 +53,29 @@ namespace POS_API.Models.POSProducts
                     POSProducts obj_posproducts = new POSProducts();
                     obj_posproducts.ProductCode = rdr["ProductCode"].ToString();
                     obj_posproducts.ProductDesc = rdr["ProductDesc"].ToString();
-                    obj_posproducts.ManufacturerName = rdr["ManufacturerName"].ToString();
-                    obj_posproducts.Model_Name = rdr["Model_Name"].ToString();
-                    obj_posproducts.Category = rdr["Category"].ToString();
-                    obj_posproducts.SubCategory = rdr["SubCategory"].ToString();
-                    obj_posproducts.WholeSalePrice = Convert.ToDecimal(rdr["WholesalePrice"]);
+                    obj_posproducts.ManufacturerName = rdr["PartManufacturerName"].ToString();
                     obj_posproducts.RetailPrice = Convert.ToDecimal(rdr["RetailPrice"]);
-                    obj_posproducts.CostPrice = Convert.ToDecimal(rdr["CostPrice"]);
-                    obj_posproducts.SupplierName = rdr["SupplierName"].ToString();
-
-                    //These below lines are commented for Sql Exceptions : System.InvalidCastException: 'Object cannot be cast from DBNull to other types.'
-
-                    //obj_posproducts.MinStock = Convert.ToInt32(rdr["MinStock"]);
-                    //obj_posproducts.MaxStock = Convert.ToInt32(rdr["MaxStock"]);
-                    //obj_posproducts.SafetyStock = Convert.ToInt32(rdr["SafetyStock"]);
-
-
-                    // Fix: Since the values for MinStock , MaxStock and SafetyStock is null in the Backend table the SQL Exception is arised
-                    // So setting the values to   "0" to overcome the above issues .
-                   
-                    obj_posproducts.MinStock = 0;
-                    obj_posproducts.MaxStock = 0;
-                    obj_posproducts.SafetyStock = 0;
-
-                    //Latest Changes : StockInHand is newly added for Quantity purpose [27-01-2022]
                     obj_posproducts.StockInHand = Convert.ToInt32(rdr["StockInHand"]);
+                    obj_posproducts.MerchantName = rdr["MerchantName"].ToString();
+                    obj_posproducts.MContactName = rdr["MContactName"].ToString();
+                    obj_posproducts.MAddress = rdr["MAddress"].ToString();
+                    obj_posproducts.MPhone = rdr["MPhone"].ToString();
+                    obj_posproducts.MEmail = rdr["MEMail"].ToString();
+                    obj_posproducts.MMobile = rdr["MMobile"].ToString();
+                    obj_posproducts.MCity = rdr["MCity"].ToString();
+                    obj_posproducts.MCountry = rdr["MCountry"].ToString();
+                    obj_posproducts.StoreName = rdr["StoreName"].ToString();
+                    obj_posproducts.SContactName = rdr["SContactName"].ToString();
+                    obj_posproducts.SAddress = rdr["SAddress"].ToString();
+                    obj_posproducts.SContactNumber = rdr["SContactNumber"].ToString();
+                    obj_posproducts.SEmail = rdr["SEMail"].ToString();
+                    obj_posproducts.SCity = rdr["SCity"].ToString();
+                    obj_posproducts.SCountry = rdr["SCountry"].ToString();
                     posproductsList.Add(obj_posproducts);
                 }
                 con.Close();
             }
-            
             return posproductsList;
-
         }
 
 
@@ -124,42 +105,39 @@ namespace POS_API.Models.POSProducts
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-
         }
 
-
-
-        //===========================================================================================================================================================
-
-        //Newly added Class for API Implementations
-        public class ListtoDataTableConverter
-        {
-            public DataTable ToDataTable<T>(List<T> items)
-            {
-                DataTable dataTable = new DataTable(typeof(T).Name);
-                //Get all the properties
-                PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                foreach (PropertyInfo prop in Props)
-                {
-                    //Setting column names as Property names
-                    dataTable.Columns.Add(prop.Name);
-                }
-                foreach (T item in items)
-                {
-                    var values = new object[Props.Length];
-                    for (int i = 0; i < Props.Length; i++)
-                    {
-                        //inserting property values to datatable rows
-                        values[i] = Props[i].GetValue(item, null);
-                    }
-                    dataTable.Rows.Add(values);
-                }
-                //put a breakpoint here and check datatable
-                return dataTable;
-            }
-        }
-        //================================================================================================================================
     }
+    //===========================================================================================================================================================
+
+    //Newly added Class for API Implementations
+    public class ListtoDataTableConverter
+    {
+        public DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
+        }
+    }
+    //================================================================================================================================
 }
 
 
