@@ -41,6 +41,7 @@ namespace POS_API.Models.POSUser
                     obj_posuser.MMobile = rdr["MMobile"].ToString();
                     obj_posuser.MCity = rdr["MCity"].ToString();
                     obj_posuser.MCountry = rdr["MCountry"].ToString();
+                    obj_posuser.MVATNumber = rdr["MVATNumber"].ToString();
                     obj_posuser.StoreName = rdr["StoreName"].ToString();
                     obj_posuser.SContactName = rdr["SContactName"].ToString();
                     obj_posuser.SAddress = rdr["SAddress"].ToString();

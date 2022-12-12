@@ -12,6 +12,7 @@
         public string MEmail { get; set; }
         public string MCity { get; set; }
         public string MCountry { get; set; }
+        public string MVATNumber { get; set; }
         public string StoreName { get; set; }
         public string SContactName { get; set; }
         public string SAddress { get; set; }
