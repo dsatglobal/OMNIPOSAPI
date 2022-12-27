@@ -54,6 +54,7 @@ namespace POS_API.Models.POSProducts
                     obj_posproducts.ProductCode = rdr["ProductCode"].ToString();
                     obj_posproducts.ProductDesc = rdr["ProductDesc"].ToString();
                     obj_posproducts.ManufacturerName = rdr["PartManufacturerName"].ToString();
+                    obj_posproducts.FranchiseeName = rdr["ManufacturerName"].ToString();
                     obj_posproducts.RetailPrice = Convert.ToDecimal(rdr["RetailPrice"]);
                     obj_posproducts.StockInHand = Convert.ToInt32(rdr["StockInHand"]);
                     obj_posproducts.MerchantName = rdr["MerchantName"].ToString();

@@ -15,6 +15,7 @@ namespace POS_API.Models.POSProducts
         public string ProductCode { get; set; }
         public string ProductDesc { get; set; }
         public string ManufacturerName { get; set; }
+        public string FranchiseeName { get; set; }
         public decimal RetailPrice { get; set; }
         public int StockInHand { get; set; }
         public string MerchantName { get; set; }
