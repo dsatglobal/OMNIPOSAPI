@@ -94,18 +94,24 @@ namespace POS_API.Models.POSProducts
         //Parameter name        : [ "tblProductsType" ] -This parameter is for the stored procedure -SP_InsertProductOmnitoPos. 
         public void AddProductsOmniToPos(List<POSProducts> posproductsList)
         {
-            using (SqlConnection con = new SqlConnection(connectionstring))
-            {
-                SqlCommand cmd = new SqlCommand("SP_InsertProductOmnitoPos", con);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            try { 
+                using (SqlConnection con = new SqlConnection(connectionstring))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_InsertProductOmnitoPos", con);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                DataTable dt1 = new DataTable();
-                dt1 = listdata.ToDataTable<POSProducts>(posproductsList);
+                    DataTable dt1 = new DataTable();
+                    dt1 = listdata.ToDataTable<POSProducts>(posproductsList);
 
-                cmd.Parameters.AddWithValue("@tblProductsType", dt1);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                    cmd.Parameters.AddWithValue("@tblProductsType", dt1);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex) 
+            { 
+            
             }
         }
 

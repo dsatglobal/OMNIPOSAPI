@@ -16,10 +16,16 @@ namespace POS_API.Controllers
         [HttpGet]
         public IActionResult List()
         {
+            try { 
             List<POSProducts> posproductsList = new List<POSProducts>();  
             posproductsList = dalposproducts.GetProductsOmnitoPOS();
             dalposproducts.AddProductsOmniToPos(posproductsList);
             return Ok(posproductsList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }
